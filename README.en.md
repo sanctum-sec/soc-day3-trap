@@ -38,7 +38,7 @@ Your output becomes everyone else's input. Real SOCs live or die by their sensor
 
 ```
 ssh ubuntu@wic01.sanctumsec.com
-# password: GhostTrace-01!  (from lightsail-access.md)
+# password/пароль: see https://wic-krakow.sanctumsec.com/wic-access-ghosttrace (Basic Auth: wic / stepup-krakow-2026)
 ```
 
 Already installed: `git`, Python 3.10 + pip, Node.js LTS, `claude`, `codex`, AWS CLI + credentials for `s3://wic-krakow-2026`.
@@ -368,3 +368,27 @@ Mocks don't have to be clever. They have to exist. Peer teams can develop agains
 - Feed your captures into the shared S3 bucket so future workshops have real data.
 
 Good hunting.
+
+---
+
+## Day 3 cross-cutting goals (AI-CTI themes)
+
+In addition to your team-specific deliverables above, **the following three themes from Day 3's curriculum (Modules 4–6) should visibly show up somewhere in your tool, your admin page, or your training artifacts.** Claude Code is the one that makes these feasible in a single day — use it.
+
+### Goal 1 — AI-Augmented CTI
+
+Use Claude (or any LLM) to automate at least one step of the CTI lifecycle *inside* your tool: extraction, classification, correlation, or enrichment of threat intelligence. This is Module 4's practical application.
+
+### Goal 2 — TTPs and AI-enabled Attack Patterns
+
+When you map behaviors to MITRE ATT&CK, also recognize TTPs that an AI-enabled adversary would produce differently: LLM-generated phishing prose, automated OSINT-driven recon, machine-generated polymorphic payloads, scripted beaconing at unusual intervals. Reflect this in your detections, hypotheses, IOC tags, or playbooks.
+
+### Goal 3 — AI Social Engineering (offense *and* defense)
+
+Real attackers now use AI to scale phishing, voice-cloning, and impersonation. Your tool should touch this at least once: capturing a social-engineering artifact, tagging one, alerting on it, enriching one, or — at minimum — documenting how your tool *would* react to an AI-enabled SE attempt.
+
+### How each goal lands in your work — team-specific guidance
+
+- **AI-Augmented CTI:** After you capture each honeypot session, pass the command sequence to Claude and ask: *"Classify this session into one of MITRE ATT&CK initial-access / execution / persistence techniques. Confidence?"* Store the classification alongside the raw capture. Surface both on the admin page.
+- **TTPs / AI attack patterns:** Add a small set of LLM-obvious attack signatures to your honeypot responses — e.g., token-efficient one-liner recon (`uname -a; id; cat /etc/os-release`), base64-decoded curl patterns, clipboard-scraper payloads. If a session contains these, tag it `data.ai_likely=true`.
+- **AI social engineering:** On your HTTP honeypot, add fake login endpoints that *look* like phishing-kit landing pages (`/secure-banking/login`, `/office365-update`). Log posted credentials as `data.se_attempt=true`. Include one in your admin page Security tab.

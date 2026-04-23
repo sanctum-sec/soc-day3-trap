@@ -38,7 +38,7 @@
 
 ```
 ssh ubuntu@wic01.sanctumsec.com
-# пароль: GhostTrace-01!  (з lightsail-access.md)
+# password/пароль: see https://wic-krakow.sanctumsec.com/wic-access-ghosttrace (Basic Auth: wic / stepup-krakow-2026)
 ```
 
 Вже встановлено: `git`, Python 3.10 + pip, Node.js LTS, `claude`, `codex`, AWS CLI + облікові дані для `s3://wic-krakow-2026`.
@@ -368,3 +368,27 @@ auto-refresh every 5s:
 - Відправляти ваші захоплення у спільний S3-бакет — для майбутніх воркшопів.
 
 Гарного полювання.
+
+---
+
+## Наскрізні цілі Дня 3 (AI-CTI-теми)
+
+На додачу до специфічних-для-команди deliverable-ів вище, **наступні три теми з програми Дня 3 (Модулі 4–6) мають помітно проявитися десь у вашому інструменті, адмін-сторінці або навчальних артефактах.** Claude Code — те, що робить це виконуваним за один день — використовуйте його.
+
+### Ціль 1 — AI-Augmented CTI
+
+Використайте Claude (чи будь-який LLM) для автоматизації щонайменше одного кроку CTI-циклу *всередині* вашого інструмента: extraction, classification, correlation чи enrichment threat intelligence. Це — практична реалізація Модуля 4.
+
+### Ціль 2 — TTP та AI-enabled attack patterns
+
+Коли мапуєте поведінку в MITRE ATT&CK, розпізнавайте також TTP, які AI-enabled зловмисник створить інакше: LLM-генерований phishing, автоматизований OSINT-driven recon, машинно-генеровані polymorphic payloads, scripted beaconing на незвичних інтервалах. Відобразіть це у ваших детекціях, гіпотезах, тегах IOC чи playbook-ах.
+
+### Ціль 3 — AI Social Engineering (offense *та* defense)
+
+Справжні зловмисники зараз використовують AI для масштабування phishing-у, voice-cloning, impersonation. Ваш інструмент має хоч раз цього торкнутися: захопити SE-артефакт, тегнути один, алертити на один, збагатити один — або, щонайменше, документувати, *як би* ваш інструмент реагував на AI-enabled SE-спробу.
+
+### Як кожна ціль потрапляє у вашу роботу — специфічна для команди
+
+- **AI-Augmented CTI:** Після захоплення кожної honeypot-сесії передавайте послідовність команд у Claude із запитом: *«Класифікуй цю сесію в одну з технік MITRE ATT&CK initial-access / execution / persistence. Confidence?»* Зберігайте класифікацію поруч із сирим захопленням. Виводьте обидва на адмін-сторінку.
+- **TTP / AI attack patterns:** Додайте невеликий набір LLM-очевидних сигнатур атаки у ваші honeypot-відповіді — наприклад, token-efficient one-liner recon (`uname -a; id; cat /etc/os-release`), base64-decoded curl-патерни, clipboard-scraper payloads. Якщо сесія містить такі — тегайте її `data.ai_likely=true`.
+- **AI social engineering:** На HTTP-honeypot додайте fake login endpoints, що *виглядають* як phishing-kit landing pages (`/secure-banking/login`, `/office365-update`). Логуйте надіслані creds як `data.se_attempt=true`. Додайте один приклад на Security-таб адмінки.
