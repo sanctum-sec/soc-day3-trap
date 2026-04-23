@@ -1,0 +1,15 @@
+[Unit]
+Description=SOC Day3 IOC Sync (wic01)
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/app
+ExecStart=/home/ubuntu/app/venv/bin/python3 ioc_sync.py
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/ubuntu/app/logs/ops.log
+StandardError=append:/home/ubuntu/app/logs/ops.log
+
+[Install]
+WantedBy=multi-user.target

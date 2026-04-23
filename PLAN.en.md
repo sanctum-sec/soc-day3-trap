@@ -38,7 +38,7 @@ Your output becomes everyone else's input. Real SOCs live or die by their sensor
 
 ```
 ssh ubuntu@wic01.sanctumsec.com
-# password/пароль: see https://wic-krakow.sanctumsec.com/wic-access-ghosttrace (Basic Auth: wic / stepup-krakow-2026)
+# password/пароль: see https://wic-krakow.sanctumsec.com/wic-access-ghosttrace (ask the instructor for the Basic Auth credentials)
 ```
 
 Already installed: `git`, Python 3.10 + pip, Node.js LTS, `claude`, `codex`, AWS CLI + credentials for `s3://wic-krakow-2026`.

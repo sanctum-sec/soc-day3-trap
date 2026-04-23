@@ -1,0 +1,15 @@
+[Unit]
+Description=SOC Day3 Admin Dashboard (wic01) — port 8001
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/app
+ExecStart=/home/ubuntu/app/venv/bin/uvicorn admin:app --host 0.0.0.0 --port 8001
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/ubuntu/app/logs/ops.log
+StandardError=append:/home/ubuntu/app/logs/ops.log
+
+[Install]
+WantedBy=multi-user.target
